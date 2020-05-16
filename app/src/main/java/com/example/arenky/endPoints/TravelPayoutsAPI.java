@@ -1,6 +1,6 @@
-package com.example.arenky.EndPoints;
+package com.example.arenky.endPoints;
 
-import com.example.arenky.POJOs.FlightResponse;
+import com.example.arenky.flight.FlightResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -1,16 +1,16 @@
 package com.example.arenky.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.arenky.R;
 
@@ -19,14 +19,41 @@ import com.example.arenky.R;
  */
 public class FlyFragment extends Fragment {
 
+    public static interface FlyFragmentListener{
+        void onClicked(String origin, String destination);
+    }
+    // en el codigo de arriba y abajo se agrega el listener para el fragment
+    private FlyFragmentListener flyFragmentListener;
+
     Button btnBuscar;
     EditText txtOrigen;
     EditText txtDestino;
+
+    FlightsListFragment flightsListFragment;
+
+    private String origin;
+    private String destination;
 
     public FlyFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof FlyFragmentListener) {
+            flyFragmentListener = (FlyFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        flyFragmentListener = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,19 +63,18 @@ public class FlyFragment extends Fragment {
         btnBuscar = view.findViewById(R.id.btnBuscar);
         txtOrigen = view.findViewById(R.id.txtOrigen);
         txtDestino = view.findViewById(R.id.txtDestino);
-        txtPrueba = view.findViewById(R.id.txtPrueba);
+
 
         btnBuscar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                if (view != null){
-                    FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
-                    Fragment flightsListFragment = new FlightsListFragment();
-                    mFragmentTransaction.replace(R.id.container, flightsListFragment);
-                    mFragmentTransaction.addToBackStack(null);
-                    mFragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                    mFragmentTransaction.commit();
+                origin = txtOrigen.getText() + "";
+                destination = txtDestino.getText() + "";
+                if (flyFragmentListener != null){
+                    flyFragmentListener.onClicked(origin, destination);
                 }
+
             }
         });
         return view;

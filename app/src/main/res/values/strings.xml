@@ -4,5 +4,6 @@
     <string name="menu_map">Map</string>
     <string name="menu_fly">Fly</string>
     <string name="TRAVEL_PAYOUTS_TOKEN">98983e1f8fecec70c5231f4a367f1b7e</string>
+    <string name="TRAVEL_PAYOUTS_BASE_URL">http://api.travelpayouts.com</string>
 
 </resources>
