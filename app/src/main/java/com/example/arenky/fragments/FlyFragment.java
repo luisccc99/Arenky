@@ -3,6 +3,7 @@ package com.example.arenky.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +23,6 @@ public class FlyFragment extends Fragment {
     EditText txtOrigen;
     EditText txtDestino;
 
-    TextView txtPrueba;
-
     public FlyFragment() {
         // Required empty public constructor
     }
@@ -42,7 +41,14 @@ public class FlyFragment extends Fragment {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                txtPrueba.setText(txtOrigen.getText() + ", " + txtDestino.getText());
+                if (view != null){
+                    FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
+                    Fragment flightsListFragment = new FlightsListFragment();
+                    mFragmentTransaction.replace(R.id.container, flightsListFragment);
+                    mFragmentTransaction.addToBackStack(null);
+                    mFragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    mFragmentTransaction.commit();
+                }
             }
         });
         return view;

@@ -3,7 +3,6 @@
     <string name="menu_home">Home</string>
     <string name="menu_map">Map</string>
     <string name="menu_fly">Fly</string>
+    <string name="TRAVEL_PAYOUTS_TOKEN">98983e1f8fecec70c5231f4a367f1b7e</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
