@@ -5,9 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.arenky.fragments.FlightsListFragment;
 import com.example.arenky.fragments.FlyFragment;
@@ -20,10 +27,47 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
     BottomNavigationView bottomNavigationView;
     public static final String BASE_URL = "http://api.travelpayouts.com/";
 
+
+    
+    private BroadcastReceiver networkStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo ni = manager.getActiveNetworkInfo();
+            onNetworkChange(ni);
+        }
+    };
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+    @Override
+    protected void onPause() {
+        unregisterReceiver(networkStateReceiver);
+        super.onPause();
+    }
+    private void onNetworkChange(NetworkInfo networkInfo) {
+        if (networkInfo != null) {
+            if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
+                Log.d("MenuActivity", "CONNECTED");
+                Toast.makeText(this, "Conectado prro", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.d("MenuActivity", "DISCONNECTED");
+                Toast.makeText(this, "No hay conexión", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         });
     }
 
+
+
     private void showSelectedFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
@@ -66,4 +112,6 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         ft.commit();
 
     }
+
+
 }
