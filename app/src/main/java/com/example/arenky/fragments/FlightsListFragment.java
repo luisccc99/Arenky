@@ -1,5 +1,7 @@
 package com.example.arenky.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.arenky.FlightAdapter;
+import com.example.arenky.FragToMain;
 import com.example.arenky.R;
 import com.example.arenky.endPoints.TravelPayoutsAPI;
 import com.example.arenky.flight.FlightData;
@@ -27,14 +31,20 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FlightsListFragment extends Fragment implements FlightAdapter.OnFlightListener{
+public class FlightsListFragment extends Fragment {
 
     private static final String TAG = FlightsListFragment.class.getSimpleName();
-    private String origin;
     private static Retrofit retrofit = null;
+
+    private String origin;
+    private String destination;
+
+    public static List<FlightData> flightData;
+
+    FragToMain fragToMain;
+
     private RecyclerView recyclerView;
-    private List<FlightData> flightData;
-    private FlightAdapter adapter;
+    private FlightAdapter mFlightAdapter;
 
     public void setOrigin(String origin) {
         this.origin = origin;
@@ -44,10 +54,17 @@ public class FlightsListFragment extends Fragment implements FlightAdapter.OnFli
         this.destination = destination;
     }
 
-    private String destination;
-
     public FlightsListFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            // si el contexto que esta llegando es una instancia de un activity
+            fragToMain = (FragToMain) context;
+        }
     }
 
     @Override
@@ -62,10 +79,10 @@ public class FlightsListFragment extends Fragment implements FlightAdapter.OnFli
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recViewFlights);
+        // cuando es un activity es this pero como estamos en un fragment es getContext
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         cargarDatos();
-
     }
 
     private void cargarDatos() {
@@ -84,11 +101,13 @@ public class FlightsListFragment extends Fragment implements FlightAdapter.OnFli
 
         flightResponseCall.enqueue(new Callback<FlightResponse>() {
             @Override
-            public void onResponse(Call<FlightResponse> call, Response<FlightResponse> response) {
+            public void onResponse(@NonNull Call<FlightResponse> call,
+                                   @NonNull Response<FlightResponse> response) {
                 assert response.body() != null;
                 flightData = response.body().getDataList();
-                adapter = new FlightAdapter(flightData);
-                recyclerView.setAdapter(adapter);
+                mFlightAdapter = new FlightAdapter(getContext(), flightData);
+                recyclerView.setAdapter(mFlightAdapter);
+                clicked();
                 Log.d(TAG, "onResponse:\n" +
                         "number of flights received " + flightData.size() + "\n" +
                         "success: " + response.body().getSuccess()
@@ -96,16 +115,21 @@ public class FlightsListFragment extends Fragment implements FlightAdapter.OnFli
             }
 
             @Override
-            public void onFailure(Call<FlightResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<FlightResponse> call,
+                                  @NonNull Throwable t) {
                 Log.e(TAG, "onFailure: " + t.getMessage(), t);
             }
         });
-
-
     }
 
-    @Override
-    public void onFlightClick(FlightData flightData) {
-
+    private void clicked() {
+        mFlightAdapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragToMain.sendFlightData(
+                        // cuando se envia la view, se envia el objeto
+                        flightData.get(recyclerView.getChildAdapterPosition(v)));
+            }
+        });
     }
 }

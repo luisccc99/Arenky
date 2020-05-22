@@ -1,6 +1,7 @@
 package com.example.arenky;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,31 +13,35 @@ import com.example.arenky.flight.FlightData;
 
 import java.util.List;
 
-public class FlightAdapter extends RecyclerView.Adapter<FlightAdapter.ViewHolder> {
+public class FlightAdapter extends RecyclerView.Adapter<FlightAdapter.ViewHolder> implements View.OnClickListener {
 
-    public final List<FlightData> flightDataList ;
+    private final List<FlightData> flightDataList;
 
-    private OnFlightListener mOnFlightListener;
+    private LayoutInflater mLayoutInflater;
 
-    public FlightAdapter(List<FlightData> flightDataList, OnFlightListener onFlightListener){
+    private View.OnClickListener mOnClickListener;
+
+    public FlightAdapter(Context context, List<FlightData> flightDataList) {
+        mLayoutInflater = LayoutInflater.from(context);
         this.flightDataList = flightDataList;
-        mOnFlightListener = onFlightListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        View view = mLayoutInflater
                 .inflate(R.layout.filght_item, parent, false);
-        return new ViewHolder(view, mOnFlightListener);
+
+        view.setOnClickListener(this);
+        return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.flight = flightDataList.get(position);
-        holder.gate.setText("De: "+flightDataList.get(position).gate);
+        holder.gate.setText("De: " + flightDataList.get(position).gate);
         holder.price.setText(flightDataList.get(position).value + " MXN");
-        holder.departDate.setText("Ida: "+flightDataList.get(position).departDate);
+        holder.departDate.setText("Ida: " + flightDataList.get(position).departDate);
         holder.duration.setText(flightDataList.get(position).duration + " min");
 
     }
@@ -46,34 +51,34 @@ public class FlightAdapter extends RecyclerView.Adapter<FlightAdapter.ViewHolder
         return flightDataList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public FlightData flight;
-        public final View mView;
-        public final TextView gate;
-        public final TextView price;
-        public final TextView departDate;
-        public final TextView duration;
-        OnFlightListener onFlightListener;
+    @Override
+    public void onClick(View v) {
+        if (mOnClickListener != null) {
+            // pasar la lista
+            mOnClickListener.onClick(v);
+        }
+    }
 
-        public ViewHolder(View itemView, OnFlightListener onFlightListener) {
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        FlightData flight;
+        final View mView;
+        final TextView gate;
+        final TextView price;
+        final TextView departDate;
+        final TextView duration;
+
+        ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             gate = mView.findViewById(R.id.flight_gate);
             price = mView.findViewById(R.id.price);
             departDate = mView.findViewById(R.id.depart_date);
             duration = mView.findViewById(R.id.duration);
-            this.onFlightListener = onFlightListener;
-
-            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            onFlightListener.onFlightClick(flightDataList.get(getAdapterPosition()));
-        }
-    }
-
-    public interface OnFlightListener{
-        void onFlightClick(FlightData flightData);
     }
 }

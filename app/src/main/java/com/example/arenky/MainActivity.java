@@ -25,13 +25,12 @@ import com.example.arenky.fragments.MapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFragmentListener,
-    FlightAdapter.OnFlightListener{
+        FragToMain {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     BottomNavigationView bottomNavigationView;
-    public static final String BASE_URL = "http://api.travelpayouts.com/";
 
-
-    
     private BroadcastReceiver networkStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -40,70 +39,67 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
             onNetworkChange(ni);
         }
     };
+
     @Override
     public void onResume() {
         super.onResume();
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
     }
+
     @Override
     protected void onPause() {
         unregisterReceiver(networkStateReceiver);
         super.onPause();
     }
+
     private void onNetworkChange(NetworkInfo networkInfo) {
         if (networkInfo != null) {
             if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
-                Log.d("MenuActivity", "CONNECTED");
+                Log.d(TAG, "CONNECTED");
                 Toast.makeText(this, "Conectado prro", Toast.LENGTH_SHORT).show();
             } else {
-                Log.d("MenuActivity", "DISCONNECTED");
+                Log.d(TAG, "DISCONNECTED");
                 Toast.makeText(this, "No hay conexión", Toast.LENGTH_SHORT).show();
 
             }
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
         bottomNavigationView = findViewById(R.id.bottomNavigation);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
                 switch (menuItem.getItemId()) {
-
                     case R.id.menu_home:
-                        showSelectedFragment(new HomeFragment());
+                        showFragment(new HomeFragment());
                         break;
                     case R.id.menu_map:
-                        showSelectedFragment(new MapFragment());
+                        showFragment(new MapFragment());
                         break;
                     case R.id.menu_fly:
-                        showSelectedFragment(new FlyFragment());
+                        showFragment(new FlyFragment());
                         break;
-
                 }
-
                 return true;
             }
         });
     }
 
-
-
-    private void showSelectedFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+    // TODO: PENSAR EN REUTILIZAR ESTE METODO PARA ABRIR TODO TIPO DE FRAGMENT
+    private void showFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, fragment)
+                .addToBackStack(null)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
     }
 
-    // TODO: CAMBIAR DE NOMBRE A ESTE METODO, PARA NO CONFUNDIRLO CON EL CLICKED DEL RECYCLER VIEW
+    // TODO: CAMBIAR LOS SETS CON BUNDLES Y USAR EL METODO SHOW FRAGMENT
     @Override
     public void onClicked(String origin, String destination) {
         FlightsListFragment flightsListFragment = new FlightsListFragment();
@@ -114,18 +110,15 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
-
     }
 
     @Override
-    public void onFlightClick(FlightData flightData) {
+    public void sendFlightData(FlightData flightData) {
         FlightDetailFragment detailFragment = new FlightDetailFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        detailFragment.setFlightData(flightData);
-        ft.replace(R.id.container, detailFragment);
-        ft.addToBackStack(null);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
+        // objeto bundle para enviar informacion
+        Bundle mBundle = new Bundle();
+        mBundle.putSerializable("flightData", flightData);
+        detailFragment.setArguments(mBundle);
+        showFragment(detailFragment);
     }
-
 }

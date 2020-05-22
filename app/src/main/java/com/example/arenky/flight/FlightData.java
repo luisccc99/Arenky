@@ -17,7 +17,7 @@ public class FlightData implements Serializable {
     public final Boolean showAffiliates;
 
     @SerializedName("return_date")
-    public final String returnDate;
+    public final Object returnDate;
 
     @SerializedName("origin")
     public final String origin;

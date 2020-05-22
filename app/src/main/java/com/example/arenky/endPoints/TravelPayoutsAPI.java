@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+// Explicar para que sirve este business
 public interface TravelPayoutsAPI {
 
     @GET("/v2/prices/month-matrix?currency=MXN&show_to_affiliates=true")
