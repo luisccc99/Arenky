@@ -1,7 +1,5 @@
 package com.example.arenky.fragments;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,8 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.TextView;
 
 import com.example.arenky.FlightAdapter;
 import com.example.arenky.R;
@@ -31,14 +27,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FlightsListFragment extends Fragment {
+public class FlightsListFragment extends Fragment implements FlightAdapter.OnFlightListener{
 
     private static final String TAG = FlightsListFragment.class.getSimpleName();
     private String origin;
     private static Retrofit retrofit = null;
     private RecyclerView recyclerView;
     private List<FlightData> flightData;
-    FlightAdapter adapter;
+    private FlightAdapter adapter;
 
     public void setOrigin(String origin) {
         this.origin = origin;
@@ -50,13 +46,9 @@ public class FlightsListFragment extends Fragment {
 
     private String destination;
 
-    TextView txtPrueba;
-
     public FlightsListFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,6 +65,7 @@ public class FlightsListFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         cargarDatos();
+
     }
 
     private void cargarDatos() {
@@ -108,6 +101,11 @@ public class FlightsListFragment extends Fragment {
             }
         });
 
+
     }
 
+    @Override
+    public void onFlightClick(FlightData flightData) {
+
+    }
 }

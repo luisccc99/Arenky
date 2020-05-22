@@ -9,13 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.arenky.flight.FlightData;
+import com.example.arenky.fragments.FlightDetailFragment;
 import com.example.arenky.fragments.FlightsListFragment;
 import com.example.arenky.fragments.FlyFragment;
 import com.example.arenky.fragments.HomeFragment;
 import com.example.arenky.fragments.MapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFragmentListener{
+public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFragmentListener,
+    FlightAdapter.OnFlightListener{
 
     BottomNavigationView bottomNavigationView;
     public static final String BASE_URL = "http://api.travelpayouts.com/";
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
 
                     case R.id.menu_home:
                         showSelectedFragment(new HomeFragment());
@@ -49,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         });
     }
 
-    private void showSelectedFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment)
+    private void showSelectedFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
     }
 
@@ -65,5 +68,16 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
 
+    }
+
+    @Override
+    public void onFlightClick(FlightData flightData) {
+        FlightDetailFragment detailFragment = new FlightDetailFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        detailFragment.setFlightData(flightData);
+        ft.replace(R.id.container, detailFragment);
+        ft.addToBackStack(null);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
     }
 }

@@ -2,7 +2,10 @@ package com.example.arenky.flight;
 
 import com.google.gson.annotations.SerializedName;
 
-public class FlightData {
+import java.io.Serializable;
+
+// se implementa serializable para poder enviar un objeto a otro
+public class FlightData implements Serializable {
 
     @SerializedName("value")
     public final Double value;
@@ -14,7 +17,7 @@ public class FlightData {
     public final Boolean showAffiliates;
 
     @SerializedName("return_date")
-    public final Object returnDate;
+    public final String returnDate;
 
     @SerializedName("origin")
     public final String origin;
@@ -44,7 +47,7 @@ public class FlightData {
     public final Boolean actual;
 
     public FlightData(Double value, Integer tripClass, Boolean showAffiliates,
-                      Object returnDate, String origin, Integer numberOfChanges,
+                      String returnDate, String origin, Integer numberOfChanges,
                       String gate, String foundAt, Integer duration, Integer distance,
                       String destination, String departDate, Boolean actual, Double price) {
         this.value = value;

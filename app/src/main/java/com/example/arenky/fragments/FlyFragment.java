@@ -64,7 +64,6 @@ public class FlyFragment extends Fragment {
         txtOrigen = view.findViewById(R.id.txtOrigen);
         txtDestino = view.findViewById(R.id.txtDestino);
 
-
         btnBuscar.setOnClickListener(new View.OnClickListener() {
 
             @Override
