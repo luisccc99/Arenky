@@ -19,10 +19,9 @@ import java.util.List;
 
 public class FlightDetailFragment extends Fragment {
 
-    Bundle flightBundle;
+    private Bundle flightBundle;
     private FlightData flightData;
 
-    //    private FlightData flightData = FlightsListFragment;
     private TextView txtVwGate;
     private TextView txtVwFoundAt;
     private TextView txtVwPrice;
@@ -35,12 +34,7 @@ public class FlightDetailFragment extends Fragment {
     private TextView txtVwDuration;
     private TextView txtVwActual;
 
-//    public void setFlightData(FlightData flightData) {
-//        this.flightData = flightData;
-//    }
-
     public FlightDetailFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -79,11 +73,10 @@ public class FlightDetailFragment extends Fragment {
             txtVwGate.setText(flightData.gate);
             txtVwFoundAt.append(" " + flightData.foundAt);
             txtVwPrice.append(" " + flightData.value + " MXN");
-            // TODO: REVISAR QUE CLASE LE CORRESPONDE A CADA NUMERO
 
             switch (flightData.tripClass) {
                 case 0:
-                    txtVwTripClass.append(" economica");
+                    txtVwTripClass.append(" económica");
                     break;
                 case 1:
                     txtVwTripClass.append(" negocios");
@@ -93,12 +86,12 @@ public class FlightDetailFragment extends Fragment {
                     break;
             }
 
-            txtVwTOrigin.append( " " + flightData.origin);
+            txtVwTOrigin.append(" " + flightData.origin);
             txtVwDestination.append(" " + flightData.destination);
             txtVwDepart.append(" " + flightData.departDate);
-            txtVwReturn.append(" " + (String) flightData.returnDate);
+            txtVwReturn.append(" " + flightData.returnDate);
             txtVwDistance.append(" " + flightData.distance + " km");
-            txtVwDuration.append(" " + flightData.duration + " min"); // ver si es horas
+            txtVwDuration.append(" " + flightData.duration + " min");
 
             if (flightData.actual) {
                 txtVwActual.setBackgroundColor(Color.rgb(1, 137, 123));

@@ -22,10 +22,17 @@ import com.example.arenky.fragments.FlightsListFragment;
 import com.example.arenky.fragments.FlyFragment;
 import com.example.arenky.fragments.HomeFragment;
 import com.example.arenky.fragments.MapFragment;
+import com.example.arenky.fragments.MusicListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFragmentListener,
-        FragToMain {
+        FragToMain, HomeFragment.MusicFragmentListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -120,5 +127,15 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         mBundle.putSerializable("flightData", flightData);
         detailFragment.setArguments(mBundle);
         showFragment(detailFragment);
+    }
+
+
+    @Override
+    public void onButtonSearchTrackListener(String country) {
+        Fragment musicListFragment = new MusicListFragment();
+        Bundle mBundleMusic = new Bundle();
+        mBundleMusic.putString("country", country);
+        musicListFragment.setArguments(mBundleMusic);
+        showFragment(musicListFragment);
     }
 }

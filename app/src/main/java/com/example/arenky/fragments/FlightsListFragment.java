@@ -107,7 +107,11 @@ public class FlightsListFragment extends Fragment {
                 flightData = response.body().getDataList();
                 mFlightAdapter = new FlightAdapter(getContext(), flightData);
                 recyclerView.setAdapter(mFlightAdapter);
+
+                // cada vez que se de un click en un elemento del recycler view
                 clicked();
+
+                // log para debugging
                 Log.d(TAG, "onResponse:\n" +
                         "number of flights received " + flightData.size() + "\n" +
                         "success: " + response.body().getSuccess()
