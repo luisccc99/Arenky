@@ -60,15 +60,30 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
     }
 
     private void onNetworkChange(NetworkInfo networkInfo) {
-        if (networkInfo != null) {
+        if (networkInfo != null && networkInfo.isConnected()) {
             if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
                 Log.d(TAG, "CONNECTED");
-                Toast.makeText(this, "Conectado prro", Toast.LENGTH_SHORT).show();
-            } else {
-                Log.d(TAG, "DISCONNECTED");
-                Toast.makeText(this, "No hay conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Hay conexión", Toast.LENGTH_SHORT).show();
+
+                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {                        //si esta conectado a wifi, muestra a que red esta conectdo
+                    Toast.makeText(this, "Conectado a " + networkInfo.getExtraInfo(),
+                            Toast.LENGTH_SHORT).show();
+                    // Estas conectado a un Wi-Fi
+                    Log.d("MIAPP", "Nombre red Wi-Fi: " + networkInfo.getExtraInfo());
+                }
+                if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {                      //muestra que esta conectado con datos
+                    Toast.makeText(this, "Conectado con datos móviles",
+                            Toast.LENGTH_SHORT).show();
+                    // Estas conectado con datos
+                    Log.d("MIAPP", " conectado con datos " + networkInfo.getExtraInfo());
+                }
 
             }
+
+
+        } else {
+            Log.d(TAG, "DISCONNECTED");
+            Toast.makeText(this, "No hay conexión", Toast.LENGTH_SHORT).show();
         }
     }
 
