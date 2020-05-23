@@ -3,7 +3,9 @@ package com.example.arenky.fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.arenky.MusicAdapter;
 import com.example.arenky.R;
 import com.example.arenky.endPoints.LastFmAPI;
 import com.example.arenky.music.ResponseMusic;
@@ -32,7 +35,6 @@ public class MusicListFragment extends Fragment {
     private static final String TAG = MusicListFragment.class.getSimpleName();
     private Retrofit retrofitMusic = null;
 
-    private Bundle mBundleMusic;
     private String country;
     private List<TrackData> trackData;
 
@@ -43,6 +45,10 @@ public class MusicListFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,18 +56,17 @@ public class MusicListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_music_list, container, false);
         recyclerViewTracks = view.findViewById(R.id.rec_view_tracks);
         textViewCountry = view.findViewById(R.id.country_music);
-
-        // obtener datos enviados desde el main activity
-        mBundleMusic = getArguments();
-        if (mBundleMusic != null) {
-            country = mBundleMusic.getString("country");
-        }
-
         textViewCountry.append("\n" + country);
-
-        cargarDatos();
-
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerViewTracks = view.findViewById(R.id.rec_view_tracks);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerViewTracks.setLayoutManager(layoutManager);
+        cargarDatos();
     }
 
     private void cargarDatos() {
@@ -82,6 +87,9 @@ public class MusicListFragment extends Fragment {
                                    @NonNull Response<ResponseMusic> response) {
                 assert response.body() != null;
                 trackData = response.body().tracks.trackDataList;
+                MusicAdapter musicAdapter = new MusicAdapter(getContext(), trackData);
+                recyclerViewTracks.setAdapter(musicAdapter);
+
                 Log.d(TAG, "onResponse: " + trackData.size());
             }
 

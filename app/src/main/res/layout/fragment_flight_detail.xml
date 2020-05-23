@@ -9,26 +9,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="60dp"
-        android:layout_gravity="center"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-
-            app:cardCornerRadius="3dp"
-            app:cardElevation="3dp"
-            app:cardUseCompatPadding="true"
-            android:layout_marginBottom="10dp">
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            app:cardUseCompatPadding="true">
 
             <TextView
                 android:id="@+id/gate_details"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="10dp"
                 android:contentDescription="Puedes buscar mas informacion en su sitio"
                 android:text="gate"
@@ -45,38 +43,27 @@
             android:layout_gravity="center"
             android:layout_marginVertical="3dp"
             android:gravity="center"
-            android:text="found at"
+            android:text="Encontrado: "
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/price_detail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginVertical="4dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="1dp"
+            android:text="Precio: "
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-            <TextView
-                android:id="@+id/price_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="1dp"
-                android:layout_weight="0"
-                android:gravity="center"
-                android:text="Price : "
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-            <TextView
-                android:id="@+id/trip_class_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0"
-                android:gravity="center"
-                android:text="trip class"
-                android:textSize="18sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/trip_class_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clase "
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,16 +76,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="origin"
-                android:textAlignment="center" />
+                android:text="De: "
+                android:textAlignment="textStart" />
 
             <TextView
                 android:id="@+id/destination_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="destination"
-                android:textAlignment="center" />
+                android:text="A: "
+                android:textAlignment="textStart" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,23 +99,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="depart date"
-                android:textAlignment="center" />
+                android:text="Ida: " />
 
             <TextView
                 android:id="@+id/return_date_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="return date"
-                android:textAlignment="center" />
+                android:text="Vuelta: " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="3dp"
-            android:gravity="clip_horizontal|center|center_horizontal"
             android:orientation="horizontal">
 
             <TextView
@@ -137,31 +121,30 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="clip_horizontal|center|center_horizontal"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="distance" />
+                android:text="Distancia" />
 
             <TextView
                 android:id="@+id/duration_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="duration" />
+                android:text="Duracion" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="9dp"
             app:cardCornerRadius="3dp"
-            app:cardElevation="3dp"
-            android:layout_marginTop="4dp"
-            android:layout_gravity="center">
+            app:cardElevation="3dp">
 
             <TextView
                 android:id="@+id/actual_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#D81B60"
+                android:padding="4dp"
                 android:text="actual"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 

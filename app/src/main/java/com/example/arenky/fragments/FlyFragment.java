@@ -34,11 +34,9 @@ public class FlyFragment extends Fragment {
     // en el codigo de arriba y abajo se agrega el listener para el fragment
     private FlyFragmentListener flyFragmentListener;
 
-    Button btnBuscar;
-    EditText txtOrigen;
-    EditText txtDestino;
-
-    FlightsListFragment flightsListFragment;
+    private Button btnBuscar;
+    private EditText txtOrigen;
+    private EditText txtDestino;
 
     private String origin;
     private String destination;

@@ -1,5 +1,7 @@
 package com.example.arenky.music;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 class Artist {
@@ -17,5 +19,11 @@ class Artist {
         this.name = name;
         this.mBid = mBid;
         this.url = url;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }

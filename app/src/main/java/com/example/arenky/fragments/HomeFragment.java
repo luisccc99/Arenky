@@ -19,10 +19,10 @@ import com.example.arenky.R;
  */
 public class HomeFragment extends Fragment {
 
-    EditText edtTxtCountry;
-    Button btnSearchTrack;
+    private EditText edtTxtCountry;
+    private Button btnSearchTrack;
 
-    String country;
+    private String country;
 
     private MusicFragmentListener musicFragmentListener;
 
@@ -39,6 +39,12 @@ public class HomeFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement MusicFragmentListener");
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        musicFragmentListener = null;
     }
 
     @Override

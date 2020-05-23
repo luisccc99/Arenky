@@ -26,6 +26,8 @@ import com.example.arenky.fragments.MusicListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -65,13 +67,15 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
                 Log.d(TAG, "CONNECTED");
                 Toast.makeText(this, "Hay conexión", Toast.LENGTH_SHORT).show();
 
-                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {                        //si esta conectado a wifi, muestra a que red esta conectdo
+                //si esta conectado a wifi, muestra a que red esta conectdo
+                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                     Toast.makeText(this, "Conectado a " + networkInfo.getExtraInfo(),
                             Toast.LENGTH_SHORT).show();
                     // Estas conectado a un Wi-Fi
                     Log.d("MIAPP", "Nombre red Wi-Fi: " + networkInfo.getExtraInfo());
                 }
-                if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {                      //muestra que esta conectado con datos
+                //muestra que esta conectado con datos
+                if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
                     Toast.makeText(this, "Conectado con datos móviles",
                             Toast.LENGTH_SHORT).show();
                     // Estas conectado con datos
@@ -125,32 +129,26 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
     @Override
     public void onClicked(String origin, String destination) {
         FlightsListFragment flightsListFragment = new FlightsListFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         flightsListFragment.setOrigin(origin);
         flightsListFragment.setDestination(destination);
-        ft.replace(R.id.container, flightsListFragment);
-        ft.addToBackStack(null);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
+        showFragment(flightsListFragment);
     }
 
     @Override
     public void sendFlightData(FlightData flightData) {
         FlightDetailFragment detailFragment = new FlightDetailFragment();
         // objeto bundle para enviar informacion
-        Bundle mBundle = new Bundle();
-        mBundle.putSerializable("flightData", flightData);
-        detailFragment.setArguments(mBundle);
+        Bundle bundleFlightData = new Bundle();
+        bundleFlightData.putSerializable("flightData", flightData);
+        detailFragment.setArguments(bundleFlightData);
         showFragment(detailFragment);
     }
 
 
     @Override
     public void onButtonSearchTrackListener(String country) {
-        Fragment musicListFragment = new MusicListFragment();
-        Bundle mBundleMusic = new Bundle();
-        mBundleMusic.putString("country", country);
-        musicListFragment.setArguments(mBundleMusic);
+        MusicListFragment musicListFragment = new MusicListFragment();
+        musicListFragment.setCountry(country);
         showFragment(musicListFragment);
     }
 }

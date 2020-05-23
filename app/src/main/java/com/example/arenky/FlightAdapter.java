@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.arenky.flight.FlightData;
@@ -26,6 +27,7 @@ public class FlightAdapter extends RecyclerView.Adapter<FlightAdapter.ViewHolder
         this.flightDataList = flightDataList;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mLayoutInflater
@@ -39,7 +41,7 @@ public class FlightAdapter extends RecyclerView.Adapter<FlightAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.flight = flightDataList.get(position);
-        holder.gate.setText("De: " + flightDataList.get(position).gate);
+        holder.gate.setText(flightDataList.get(position).gate);
         holder.price.setText(flightDataList.get(position).value + " MXN");
         holder.departDate.setText("Ida: " + flightDataList.get(position).departDate);
         holder.duration.setText(flightDataList.get(position).duration + " min");
