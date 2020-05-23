@@ -5,5 +5,9 @@ import com.google.gson.annotations.SerializedName;
 class AttributeArtist {
 
     @SerializedName("rank")
-    String rank;
+    public final String rank;
+
+    AttributeArtist(String rank) {
+        this.rank = rank;
+    }
 }

@@ -39,9 +39,9 @@ public class FlightsListFragment extends Fragment {
     private String origin;
     private String destination;
 
-    public static List<FlightData> flightData;
+    private List<FlightData> flightData;
 
-    FragToMain fragToMain;
+    private FragToMain fragToMain;
 
     private RecyclerView recyclerView;
     private FlightAdapter mFlightAdapter;

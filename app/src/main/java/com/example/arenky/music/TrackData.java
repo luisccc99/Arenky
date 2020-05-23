@@ -7,31 +7,31 @@ import java.util.List;
 public class TrackData {
 
     @SerializedName("name")
-    private final String name;
+    public final String name;
 
     @SerializedName("duration")
-    private final String duration;
+    public final String duration;
 
     @SerializedName("listeners")
-    private final String listeners;
+    public final String listeners;
 
     @SerializedName("mbid")
-    private final String mBid;
+    public final String mBid;
 
     @SerializedName("url")
-    private final String url;
+    public final String url;
 
     @SerializedName("streameable")
-    private final Streamable streamable;
+    public final Streamable streamable;
 
     @SerializedName("artist")
-    private final Artist artist;
+    public final Artist artist;
 
     @SerializedName("image")
-    private final List<ImageArtist> image;
+    public final List<ImageArtist> image;
 
     @SerializedName("@attr")
-    private final AttributeArtist attributeArtist;
+    public final AttributeArtist attributeArtist;
 
     public TrackData(String name, String duration, String listeners, String mBid,
                      String url, Streamable streamable, Artist artist, List<ImageArtist> image,

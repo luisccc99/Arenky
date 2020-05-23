@@ -5,9 +5,13 @@ import com.google.gson.annotations.SerializedName;
 class Streamable {
 
     @SerializedName("#text")
-    String text;
+    public final String text;
 
     @SerializedName("fulltrack")
-    String fullTrack;
+    public final String fullTrack;
 
+    Streamable(String text, String fullTrack) {
+        this.text = text;
+        this.fullTrack = fullTrack;
+    }
 }

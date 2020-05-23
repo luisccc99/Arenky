@@ -5,9 +5,13 @@ import com.google.gson.annotations.SerializedName;
 class ImageArtist {
 
     @SerializedName("#text")
-    String text;
+    public final String text;
 
     @SerializedName("size")
-    String size;
+    public final String size;
 
+    ImageArtist(String text, String size) {
+        this.text = text;
+        this.size = size;
+    }
 }

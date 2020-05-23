@@ -5,11 +5,17 @@ import com.google.gson.annotations.SerializedName;
 class Artist {
 
     @SerializedName("name")
-    String name;
+    public final String name;
 
     @SerializedName("mbid")
-    String mBid;
+    public final String mBid;
 
     @SerializedName("url")
-    String url;
+    public final String url;
+
+    Artist(String name, String mBid, String url) {
+        this.name = name;
+        this.mBid = mBid;
+        this.url = url;
+    }
 }

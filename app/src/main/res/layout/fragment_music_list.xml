@@ -18,9 +18,8 @@
             android:clickable="false"
             android:textAlignment="center"
             android:textSize="25sp"
-            android:text="Country"
-            android:hint="Música más escuchada de "
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:text="Musica mas escuchada en"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_view_tracks"
