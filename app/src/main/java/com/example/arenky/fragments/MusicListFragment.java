@@ -95,7 +95,7 @@ public class MusicListFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseMusic> call, @NonNull Throwable t) {
-
+                Log.e(TAG, "onFailure: ", t);
             }
         });
     }

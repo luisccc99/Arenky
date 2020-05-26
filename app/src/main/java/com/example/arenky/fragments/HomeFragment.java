@@ -14,37 +14,13 @@ import android.widget.EditText;
 
 import com.example.arenky.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HomeFragment extends Fragment {
-
     private EditText edtTxtCountry;
     private Button btnSearchTrack;
-
     private String country;
-
     private MusicFragmentListener musicFragmentListener;
 
     public HomeFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if (context instanceof MusicFragmentListener) {
-            musicFragmentListener = (MusicFragmentListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement MusicFragmentListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        musicFragmentListener = null;
     }
 
     @Override
@@ -63,6 +39,23 @@ public class HomeFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MusicFragmentListener) {
+            musicFragmentListener = (MusicFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement MusicFragmentListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        musicFragmentListener = null;
     }
 
     public interface MusicFragmentListener {

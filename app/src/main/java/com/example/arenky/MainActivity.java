@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         });
     }
 
-    // TODO: PENSAR EN REUTILIZAR ESTE METODO PARA ABRIR TODO TIPO DE FRAGMENT
     private void showFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -125,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
                 .commit();
     }
 
-    // TODO: CAMBIAR LOS SETS CON BUNDLES Y USAR EL METODO SHOW FRAGMENT
     @Override
     public void onClicked(String origin, String destination) {
         FlightsListFragment flightsListFragment = new FlightsListFragment();
