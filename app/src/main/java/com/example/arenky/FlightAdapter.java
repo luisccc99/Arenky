@@ -32,7 +32,6 @@ public class FlightAdapter extends RecyclerView.Adapter<FlightAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mLayoutInflater
                 .inflate(R.layout.filght_item, parent, false);
-
         view.setOnClickListener(this);
         return new ViewHolder(view);
     }

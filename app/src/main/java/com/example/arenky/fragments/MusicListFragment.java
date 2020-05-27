@@ -14,13 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.arenky.MusicAdapter;
+import com.example.arenky.MusicToMain;
 import com.example.arenky.R;
 import com.example.arenky.endPoints.HotelsAPI;
+import com.example.arenky.endPoints.LastFmAPI;
+import com.example.arenky.music.ResponseMusic;
 import com.example.arenky.music.TrackData;
 
 import java.util.List;
 
-import Hotels.SearchResponse;
+import com.example.arenky.hotels.SearchResponse;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,8 +41,12 @@ public class MusicListFragment extends Fragment {
 
     private Retrofit retrofitMusic = null;
 
+    private MusicAdapter musicAdapter;
+
     private String country;
+
     private List<TrackData> trackData;
+    private MusicToMain toMain;
 
     RecyclerView recyclerViewTracks;
     TextView textViewCountry;
@@ -73,55 +82,66 @@ public class MusicListFragment extends Fragment {
     private void cargarDatos() {
         if (retrofitMusic == null) {
             retrofitMusic = new retrofit2.Retrofit.Builder()
-                    .baseUrl(HOTELS_BASE_URL)
+                    .baseUrl(MUSIC_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-
-        HotelsAPI hotelsAPI = retrofitMusic.create(HotelsAPI.class);
-
-        final Call<SearchResponse> responseCall = hotelsAPI
-                .getSuggestions("es_MX", "chihuahua");
-
-        responseCall.enqueue(new Callback<SearchResponse>() {
-            @Override
-            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-                assert response.body() != null;
-                String term = response.body().term;
-                Integer suggestions = response.body().more;
-                Boolean misspelling = response.body().misspelling;
-                Log.d(TAG, "onResponse: " + term + "\n" +
-                        "more suggestions: " + suggestions + "\n" +
-                        "misspelling" + misspelling
-                        );
-            }
-
-            @Override
-            public void onFailure(Call<SearchResponse> call, Throwable t) {
-                Log.e(TAG, "onFailure: ", t);
-            }
-        });
-
-//        LastFmAPI lastFmAPI = retrofitMusic.create(LastFmAPI.class);
-
-//        final Call<ResponseMusic> responseCall = lastFmAPI
-//                .getTopTracks(country, TOKEN);
-//        responseCall.enqueue(new Callback<ResponseMusic>() {
-//            @Override
-//            public void onResponse(@NonNull Call<ResponseMusic> call,
-//                                   @NonNull Response<ResponseMusic> response) {
-//                assert response.body() != null;
-//                trackData = response.body().tracks.trackDataList;
-//                MusicAdapter musicAdapter = new MusicAdapter(getContext(), trackData);
-//                recyclerViewTracks.setAdapter(musicAdapter);
 //
-//                Log.d(TAG, "onResponse: " + trackData.size());
+//        HotelsAPI hotelsAPI = retrofitMusic.create(HotelsAPI.class);
+//
+//        final Call<SearchResponse> responseCall = hotelsAPI
+//                .getSuggestions("es_MX", "chihuahua");
+//
+//        responseCall.enqueue(new Callback<SearchResponse>() {
+//            @Override
+//            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+//                assert response.body() != null;
+//                String term = response.body().term;
+//                Integer suggestions = response.body().more;
+//                Boolean misspelling = response.body().misspelling;
+//                Log.d(TAG, "onResponse: " + term + "\n" +
+//                        "more suggestions: " + suggestions + "\n" +
+//                        "misspelling" + misspelling
+//                        );
 //            }
 //
 //            @Override
-//            public void onFailure(@NonNull Call<ResponseMusic> call, @NonNull Throwable t) {
+//            public void onFailure(Call<SearchResponse> call, Throwable t) {
 //                Log.e(TAG, "onFailure: ", t);
 //            }
 //        });
+
+        LastFmAPI lastFmAPI = retrofitMusic.create(LastFmAPI.class);
+
+        final Call<ResponseMusic> responseCall = lastFmAPI
+                .getTopTracks(country, TOKEN);
+        responseCall.enqueue(new Callback<ResponseMusic>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseMusic> call,
+                                   @NonNull Response<ResponseMusic> response) {
+                assert response.body() != null;
+                trackData = response.body().tracks.trackDataList;
+                musicAdapter = new MusicAdapter(getContext(), trackData);
+                recyclerViewTracks.setAdapter(musicAdapter);
+                onElementClicked();
+                Log.d(TAG, "onResponse: " + trackData.size());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseMusic> call, @NonNull Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+            }
+        });
+    }
+
+    private void onElementClicked() {
+        musicAdapter.setmOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toMain.sendTrackData(
+                        trackData.get(recyclerViewTracks.getChildAdapterPosition(v))
+                );
+            }
+        });
     }
 }

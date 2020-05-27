@@ -2,9 +2,10 @@ package com.example.arenky.music;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TrackData {
+public class TrackData implements Serializable {
 
     @SerializedName("name")
     public final String name;

@@ -23,19 +23,13 @@ import com.example.arenky.fragments.FlyFragment;
 import com.example.arenky.fragments.HomeFragment;
 import com.example.arenky.fragments.HotelsFragment;
 import com.example.arenky.fragments.MapFragment;
+import com.example.arenky.fragments.MusicDetailFragment;
 import com.example.arenky.fragments.MusicListFragment;
+import com.example.arenky.music.TrackData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFragmentListener,
-        FragToMain, HomeFragment.MusicFragmentListener {
+        FlightToMain, HomeFragment.MusicFragmentListener, MusicToMain {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -123,9 +117,18 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, fragment)
-                .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
+    }
+
+    private void showFragmentWithBackStack(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, fragment)
+                .addToBackStack(null)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
+
     }
 
     @Override
@@ -138,12 +141,12 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
 
     @Override
     public void sendFlightData(FlightData flightData) {
-        FlightDetailFragment detailFragment = new FlightDetailFragment();
+        FlightDetailFragment flightDetail = new FlightDetailFragment();
         // objeto bundle para enviar informacion
         Bundle bundleFlightData = new Bundle();
         bundleFlightData.putSerializable("flightData", flightData);
-        detailFragment.setArguments(bundleFlightData);
-        showFragment(detailFragment);
+        flightDetail.setArguments(bundleFlightData);
+        showFragmentWithBackStack(flightDetail);
     }
 
 
@@ -152,5 +155,15 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         MusicListFragment musicListFragment = new MusicListFragment();
         musicListFragment.setCountry(country);
         showFragment(musicListFragment);
+    }
+
+    @Override
+    public void sendTrackData(TrackData trackData) {
+        MusicDetailFragment musicDetail = new MusicDetailFragment();
+        Bundle bundleMusicData = new Bundle();
+        bundleMusicData.putSerializable("trackData", trackData);
+        musicDetail.setArguments(bundleMusicData);
+        showFragmentWithBackStack(musicDetail);
+
     }
 }

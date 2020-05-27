@@ -1,4 +1,4 @@
-package Hotels;
+package com.example.arenky.hotels;
 
 import com.google.gson.annotations.SerializedName;
 

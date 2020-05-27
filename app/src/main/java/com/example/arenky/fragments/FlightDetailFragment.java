@@ -58,13 +58,13 @@ public class FlightDetailFragment extends Fragment {
         flightBundle = getArguments();
         flightData = null;
 
-        setFields();
+        setUIContent();
         return view;
     }
 
 
     @SuppressLint("SetTextI18n")
-    private void setFields() {
+    private void setUIContent() {
         // verificar existencia de argumentos enviados
         if (flightBundle != null) {
             flightData = (FlightData) flightBundle.getSerializable("flightData");
@@ -73,7 +73,6 @@ public class FlightDetailFragment extends Fragment {
             txtVwGate.setText(flightData.gate);
             txtVwFoundAt.append(" " + flightData.foundAt);
             txtVwPrice.append(" " + flightData.value + " MXN");
-
             switch (flightData.tripClass) {
                 case 0:
                     txtVwTripClass.append(" económica");

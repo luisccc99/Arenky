@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-class Artist {
+public class Artist {
 
     @SerializedName("name")
     public final String name;

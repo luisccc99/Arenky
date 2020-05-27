@@ -14,11 +14,13 @@ import com.example.arenky.music.TrackData;
 
 import java.util.List;
 
-public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> {
+public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> implements  View.OnClickListener{
 
     private final List<TrackData> trackDataList;
 
     private LayoutInflater mLayoutInflater;
+    
+    private View.OnClickListener mOnClickListener;
 
     public MusicAdapter(Context context, List<TrackData> trackDataList) {
         mLayoutInflater = LayoutInflater.from(context);
@@ -46,6 +48,17 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return trackDataList.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mOnClickListener != null) {
+            mOnClickListener.onClick(v);
+        }
+    }
+
+    public void setmOnClickListener(View.OnClickListener mOnClickListener) {
+        this.mOnClickListener = mOnClickListener;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

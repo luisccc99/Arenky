@@ -16,14 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.arenky.FlightAdapter;
-import com.example.arenky.FragToMain;
+import com.example.arenky.FlightToMain;
 import com.example.arenky.R;
 import com.example.arenky.endPoints.TravelPayoutsAPI;
 import com.example.arenky.flight.FlightData;
 import com.example.arenky.flight.FlightResponse;
 
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,14 +38,12 @@ public class FlightsListFragment extends Fragment {
 
     private static Retrofit retrofit = null;
 
-    private Bundle bundleFlight;
-
     private String origin;
     private String destination;
 
     private List<FlightData> flightData;
 
-    private FragToMain fragToMain;
+    private FlightToMain fragToMain;
 
     private RecyclerView recyclerViewFlights;
     private FlightAdapter mFlightAdapter;
@@ -68,7 +65,7 @@ public class FlightsListFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof Activity) {
             // si el contexto que esta llegando es una instancia de un activity
-            fragToMain = (FragToMain) context;
+            fragToMain = (FlightToMain) context;
         }
     }
 
@@ -115,7 +112,7 @@ public class FlightsListFragment extends Fragment {
                 recyclerViewFlights.setAdapter(mFlightAdapter);
 
                 // cada vez que se de un click en un elemento del recycler view
-                clicked();
+                onElementClicked();
 
                 // log para debugging
                 Log.d(TAG, "onResponse:\n" +
@@ -132,13 +129,14 @@ public class FlightsListFragment extends Fragment {
         });
     }
 
-    private void clicked() {
+    private void onElementClicked() {
         mFlightAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragToMain.sendFlightData(
                         // cuando se envia la view, se envia el objeto
-                        flightData.get(recyclerViewFlights.getChildAdapterPosition(v)));
+                        flightData.get(recyclerViewFlights.getChildAdapterPosition(v))
+                );
             }
         });
     }
