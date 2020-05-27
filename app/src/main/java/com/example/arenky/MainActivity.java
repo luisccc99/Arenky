@@ -21,6 +21,7 @@ import com.example.arenky.fragments.FlightDetailFragment;
 import com.example.arenky.fragments.FlightsListFragment;
 import com.example.arenky.fragments.FlyFragment;
 import com.example.arenky.fragments.HomeFragment;
+import com.example.arenky.fragments.HotelsFragment;
 import com.example.arenky.fragments.MapFragment;
 import com.example.arenky.fragments.MusicListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -100,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
+                    case R.id.menu_hotel:
+                        showFragment(new HotelsFragment());
+                        break;
                     case R.id.menu_home:
                         showFragment(new HomeFragment());
                         break;

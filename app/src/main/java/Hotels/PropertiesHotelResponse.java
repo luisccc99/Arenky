@@ -1,0 +1,4 @@
+package Hotels;
+
+class PropertiesHotelResponse {
+}

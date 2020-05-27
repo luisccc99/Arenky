@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.HomeFragment">
+    tools:context=".fragments.HotelsFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="Música más escuchada"
+        android:text="Busqueda de Hoteles"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -19,27 +19,19 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
         <EditText
-            android:id="@+id/country"
+            android:id="@+id/txt_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Ingresa el nombre de un pais*"
+            android:hint="Ingresa el nombre de la ciudad"
             android:inputType="textPersonName" />
 
         <Button
-            android:id="@+id/btn_search_track"
+            android:id="@+id/btnSearchHotel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Buscar" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="*El nombre del país debe de estar en inglés" />
     </LinearLayout>
-
 </FrameLayout>

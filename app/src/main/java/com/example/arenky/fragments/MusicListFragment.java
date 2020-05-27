@@ -14,15 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.arenky.MusicAdapter;
 import com.example.arenky.R;
-import com.example.arenky.endPoints.LastFmAPI;
-import com.example.arenky.music.ResponseMusic;
+import com.example.arenky.endPoints.HotelsAPI;
 import com.example.arenky.music.TrackData;
-import com.example.arenky.music.Tracks;
 
 import java.util.List;
 
+import Hotels.SearchResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,6 +31,9 @@ public class MusicListFragment extends Fragment {
 
     private static final String TOKEN = "236a0e52b7788f04f7de13a79c79d09a";
     private static final String TAG = MusicListFragment.class.getSimpleName();
+    private static final String MUSIC_BASE_URL = "http://ws.audioscrobbler.com";
+    private static final String HOTELS_BASE_URL = "https://hotels4.p.rapidapi.com";
+
     private Retrofit retrofitMusic = null;
 
     private String country;
@@ -72,31 +73,55 @@ public class MusicListFragment extends Fragment {
     private void cargarDatos() {
         if (retrofitMusic == null) {
             retrofitMusic = new retrofit2.Retrofit.Builder()
-                    .baseUrl("http://ws.audioscrobbler.com")
+                    .baseUrl(HOTELS_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
 
-        LastFmAPI lastFmAPI = retrofitMusic.create(LastFmAPI.class);
+        HotelsAPI hotelsAPI = retrofitMusic.create(HotelsAPI.class);
 
-        final Call<ResponseMusic> responseCall = lastFmAPI
-                .getTopTracks(country, TOKEN);
-        responseCall.enqueue(new Callback<ResponseMusic>() {
+        final Call<SearchResponse> responseCall = hotelsAPI
+                .getSuggestions("es_MX", "chihuahua");
+
+        responseCall.enqueue(new Callback<SearchResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseMusic> call,
-                                   @NonNull Response<ResponseMusic> response) {
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                 assert response.body() != null;
-                trackData = response.body().tracks.trackDataList;
-                MusicAdapter musicAdapter = new MusicAdapter(getContext(), trackData);
-                recyclerViewTracks.setAdapter(musicAdapter);
-
-                Log.d(TAG, "onResponse: " + trackData.size());
+                String term = response.body().term;
+                Integer suggestions = response.body().more;
+                Boolean misspelling = response.body().misspelling;
+                Log.d(TAG, "onResponse: " + term + "\n" +
+                        "more suggestions: " + suggestions + "\n" +
+                        "misspelling" + misspelling
+                        );
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseMusic> call, @NonNull Throwable t) {
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
                 Log.e(TAG, "onFailure: ", t);
             }
         });
+
+//        LastFmAPI lastFmAPI = retrofitMusic.create(LastFmAPI.class);
+
+//        final Call<ResponseMusic> responseCall = lastFmAPI
+//                .getTopTracks(country, TOKEN);
+//        responseCall.enqueue(new Callback<ResponseMusic>() {
+//            @Override
+//            public void onResponse(@NonNull Call<ResponseMusic> call,
+//                                   @NonNull Response<ResponseMusic> response) {
+//                assert response.body() != null;
+//                trackData = response.body().tracks.trackDataList;
+//                MusicAdapter musicAdapter = new MusicAdapter(getContext(), trackData);
+//                recyclerViewTracks.setAdapter(musicAdapter);
+//
+//                Log.d(TAG, "onResponse: " + trackData.size());
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<ResponseMusic> call, @NonNull Throwable t) {
+//                Log.e(TAG, "onFailure: ", t);
+//            }
+//        });
     }
 }
