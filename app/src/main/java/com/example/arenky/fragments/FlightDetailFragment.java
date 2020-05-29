@@ -15,8 +15,6 @@ import android.widget.TextView;
 import com.example.arenky.R;
 import com.example.arenky.flight.FlightData;
 
-import java.util.List;
-
 public class FlightDetailFragment extends Fragment {
 
     private Bundle flightBundle;

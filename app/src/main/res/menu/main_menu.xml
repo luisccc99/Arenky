@@ -3,11 +3,11 @@
     <item
         android:id="@+id/menu_hotel"
         android:title="@string/menu_hotels"
-        android:icon="@drawable/ic_home"/>
+        android:icon="@drawable/ic_hotel"/>
     <item
         android:id="@+id/menu_home"
         android:title="@string/menu_music"
-        android:icon="@drawable/ic_home"/>
+        android:icon="@drawable/ic_music_note"/>
     <item
         android:id="@+id/menu_map"
         android:title="@string/menu_map"
@@ -15,5 +15,5 @@
     <item
         android:id="@+id/menu_fly"
         android:title="@string/menu_fly"
-        android:icon="@drawable/ic_fly"/>
+        android:icon="@drawable/ic_flight"/>
 </menu>
