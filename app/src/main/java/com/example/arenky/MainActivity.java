@@ -91,13 +91,11 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottomNavigation);
+        showFragment(new HotelsFragment());
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.menu_hotel:
-                        showFragment(new HotelsFragment());
-                        break;
                     case R.id.menu_home:
                         showFragment(new HomeFragment());
                         break;
@@ -106,6 +104,9 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
                         break;
                     case R.id.menu_fly:
                         showFragment(new FlyFragment());
+                        break;
+                    default:
+                        showFragment(new HotelsFragment());
                         break;
                 }
                 return true;
@@ -124,19 +125,20 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
     private void showFragmentWithBackStack(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, fragment)
                 .addToBackStack(null)
+                .replace(R.id.container, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
 
     }
 
+    //TODO: CAMBIAR EL NOMBRE A ESTE METODO
     @Override
     public void onClicked(String origin, String destination) {
         FlightsListFragment flightsListFragment = new FlightsListFragment();
         flightsListFragment.setOrigin(origin);
         flightsListFragment.setDestination(destination);
-        showFragment(flightsListFragment);
+        showFragmentWithBackStack(flightsListFragment);
     }
 
     @Override
@@ -149,12 +151,11 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         showFragmentWithBackStack(flightDetail);
     }
 
-
     @Override
     public void onButtonSearchTrackListener(String country) {
         MusicListFragment musicListFragment = new MusicListFragment();
         musicListFragment.setCountry(country);
-        showFragment(musicListFragment);
+        showFragmentWithBackStack(musicListFragment);
     }
 
     @Override

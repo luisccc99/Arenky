@@ -9,6 +9,9 @@ import retrofit2.http.Query;
 public interface LastFmAPI {
 
     @GET("/2.0/?method=geo.gettoptracks&format=json")
-    Call<ResponseMusic> getTopTracks(@Query("country")String country, @Query("api_key")String key);
+    Call<ResponseMusic> getTopTracks(@Query("country") String country, @Query("api_key") String key);
 
+    @GET("/2.0/?method=track.getInfo&format=json")
+    Call<ResponseMusic> getTrackInfo(@Query("mbid") String id,
+                                     @Query("api_key") String key);
 }

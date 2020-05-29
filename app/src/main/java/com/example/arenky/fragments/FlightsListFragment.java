@@ -73,9 +73,7 @@ public class FlightsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_flights_list, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_flights_list, container, false);
     }
 
     @Override
@@ -133,6 +131,7 @@ public class FlightsListFragment extends Fragment {
         mFlightAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: " + "element clicked");
                 fragToMain.sendFlightData(
                         // cuando se envia la view, se envia el objeto
                         flightData.get(recyclerViewFlights.getChildAdapterPosition(v))

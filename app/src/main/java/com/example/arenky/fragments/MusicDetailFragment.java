@@ -14,9 +14,6 @@ import com.example.arenky.R;
 import com.example.arenky.music.Artist;
 import com.example.arenky.music.TrackData;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MusicDetailFragment extends Fragment {
 
     private TextView txtVwName;
@@ -37,7 +34,7 @@ public class MusicDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_music_detail, container, false);
-        txtVwName = view.findViewById(R.id.name_detail);
+        txtVwName = view.findViewById(R.id.track_name_detail);
         txtVwArtist = view.findViewById(R.id.artist_detail);
         txtVwListeners = view.findViewById(R.id.listeners_detail);
         txtVwDuration = view.findViewById(R.id.duration_detail);
@@ -56,8 +53,11 @@ public class MusicDetailFragment extends Fragment {
             Artist artist = trackData.artist;
             txtVwName.setText(trackData.name);
             txtVwArtist.setText(artist.name);
-            txtVwListeners.setText(trackData.listeners);
-            txtVwDuration.setText(trackData.duration);
+            txtVwListeners.setText("Oyentes " +
+                    (Integer.parseInt(trackData.listeners)/1_000) + " k");
+            txtVwDuration.setText("Duración " +
+                    (Integer.parseInt(trackData.duration) / 60)  + " min"
+            );
         }
     }
 }

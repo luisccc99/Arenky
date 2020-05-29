@@ -1,5 +1,7 @@
 package com.example.arenky.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -60,20 +62,26 @@ public class MusicListFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            toMain = (MusicToMain) context;
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_music_list, container, false);
-        recyclerViewTracks = view.findViewById(R.id.rec_view_tracks);
-        textViewCountry = view.findViewById(R.id.country_music);
-        textViewCountry.append("\n" + country);
-        return view;
+        return inflater.inflate(R.layout.fragment_music_list, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerViewTracks = view.findViewById(R.id.rec_view_tracks);
+        textViewCountry = view.findViewById(R.id.country_music);
+        textViewCountry.append("\n" + country);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerViewTracks.setLayoutManager(layoutManager);
         cargarDatos();
@@ -86,30 +94,6 @@ public class MusicListFragment extends Fragment {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-//
-//        HotelsAPI hotelsAPI = retrofitMusic.create(HotelsAPI.class);
-//
-//        final Call<SearchResponse> responseCall = hotelsAPI
-//                .getSuggestions("es_MX", "chihuahua");
-//
-//        responseCall.enqueue(new Callback<SearchResponse>() {
-//            @Override
-//            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-//                assert response.body() != null;
-//                String term = response.body().term;
-//                Integer suggestions = response.body().more;
-//                Boolean misspelling = response.body().misspelling;
-//                Log.d(TAG, "onResponse: " + term + "\n" +
-//                        "more suggestions: " + suggestions + "\n" +
-//                        "misspelling" + misspelling
-//                        );
-//            }
-//
-//            @Override
-//            public void onFailure(Call<SearchResponse> call, Throwable t) {
-//                Log.e(TAG, "onFailure: ", t);
-//            }
-//        });
 
         LastFmAPI lastFmAPI = retrofitMusic.create(LastFmAPI.class);
 
@@ -135,9 +119,10 @@ public class MusicListFragment extends Fragment {
     }
 
     private void onElementClicked() {
-        musicAdapter.setmOnClickListener(new View.OnClickListener() {
+        musicAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: " + "click");
                 toMain.sendTrackData(
                         trackData.get(recyclerViewTracks.getChildAdapterPosition(v))
                 );

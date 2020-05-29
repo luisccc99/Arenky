@@ -19,7 +19,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
     private final List<TrackData> trackDataList;
 
     private LayoutInflater mLayoutInflater;
-    
+
     private View.OnClickListener mOnClickListener;
 
     public MusicAdapter(Context context, List<TrackData> trackDataList) {
@@ -32,6 +32,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mLayoutInflater
                 .inflate(R.layout.track_item, parent, false);
+        view.setOnClickListener(this);
         return new ViewHolder(view);
     }
 
@@ -57,8 +58,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
         }
     }
 
-    public void setmOnClickListener(View.OnClickListener mOnClickListener) {
-        this.mOnClickListener = mOnClickListener;
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

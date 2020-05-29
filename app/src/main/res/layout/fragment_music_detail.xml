@@ -31,6 +31,13 @@
 
         </androidx.cardview.widget.CardView>
 
+        <ImageView
+            android:id="@+id/album_image_detail"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher_background" />
+
         <TextView
             android:id="@+id/artist_detail"
             android:layout_width="match_parent"
