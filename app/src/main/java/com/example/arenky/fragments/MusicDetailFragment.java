@@ -56,7 +56,8 @@ public class MusicDetailFragment extends Fragment {
             txtVwListeners.setText("Oyentes " +
                     (Integer.parseInt(trackData.listeners)/1_000) + " k");
             txtVwDuration.setText("Duración " +
-                    (Integer.parseInt(trackData.duration) / 60)  + " min"
+                    (Integer.parseInt(trackData.duration) / 60)  + " min "
+                    +(Integer.parseInt(trackData.duration) % 60) + " seg"
             );
         }
     }

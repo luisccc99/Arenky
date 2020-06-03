@@ -1,8 +1,10 @@
 package com.example.arenky.hotels;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
-class Entity {
+public class EntityHotel {
 
     @SerializedName("geoId")
     public final String geoId;
@@ -31,8 +33,8 @@ class Entity {
     @SerializedName("name")
     public final String nameEntity;
 
-    Entity(String geoId, String destinationId, Integer landmarkCityDestinationId, String type,
-           String caption, String redirectPage, Double latitude, Double longitude, String name) {
+    EntityHotel(String geoId, String destinationId, Integer landmarkCityDestinationId, String type,
+                String caption, String redirectPage, Double latitude, Double longitude, String name) {
         this.geoId = geoId;
         this.destinationId = destinationId;
         this.landmarkCityDestinationId = landmarkCityDestinationId;
@@ -42,5 +44,18 @@ class Entity {
         this.latitude = latitude;
         this.longitude = longitude;
         this.nameEntity = name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return
+                "Geo id: " + geoId + "\n" +
+                "Name: " + nameEntity + "\n" +
+                "Destination id: " + destinationId + "\n" +
+                "Type: " + type + "\n" +
+                "Latitude: " + latitude + "\n" +
+                "Longitude: " + longitude;
+
     }
 }

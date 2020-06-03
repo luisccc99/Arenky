@@ -20,7 +20,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/txt_city"
+            android:id="@+id/txt_query"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -28,10 +28,11 @@
             android:inputType="textPersonName" />
 
         <Button
-            android:id="@+id/btnSearchHotel"
+            android:id="@+id/btn_search_suggestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Buscar" />
+
     </LinearLayout>
 </FrameLayout>

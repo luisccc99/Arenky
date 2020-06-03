@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.arenky.FlightAdapter;
 import com.example.arenky.FlightToMain;
@@ -47,6 +48,7 @@ public class FlightsListFragment extends Fragment {
 
     private RecyclerView recyclerViewFlights;
     private FlightAdapter mFlightAdapter;
+    private TextView textViewInfoFlight;
 
     public FlightsListFragment() {
         // Required empty public constructor
@@ -72,14 +74,15 @@ public class FlightsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_flights_list, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        textViewInfoFlight = view.findViewById(R.id.text_info_flight);
         recyclerViewFlights = view.findViewById(R.id.recViewFlights);
+        textViewInfoFlight.setText("NonStop tickets a " + destination);
         // cuando es un activity es this pero como estamos en un fragment es getContext
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerViewFlights.setLayoutManager(layoutManager);

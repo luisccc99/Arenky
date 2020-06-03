@@ -14,9 +14,6 @@ import android.widget.EditText;
 
 import com.example.arenky.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FlyFragment extends Fragment {
 
     private static final String TAG = FlyFragment.class.getSimpleName();

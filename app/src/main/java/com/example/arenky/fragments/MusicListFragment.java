@@ -39,7 +39,7 @@ public class MusicListFragment extends Fragment {
     private static final String TOKEN = "236a0e52b7788f04f7de13a79c79d09a";
     private static final String TAG = MusicListFragment.class.getSimpleName();
     private static final String MUSIC_BASE_URL = "http://ws.audioscrobbler.com";
-    private static final String HOTELS_BASE_URL = "https://hotels4.p.rapidapi.com";
+
 
     private Retrofit retrofitMusic = null;
 
@@ -51,7 +51,7 @@ public class MusicListFragment extends Fragment {
     private MusicToMain toMain;
 
     RecyclerView recyclerViewTracks;
-    TextView textViewCountry;
+    TextView textViewCountry, textViewInfo;
 
     public MusicListFragment() {
         // Required empty public constructor
@@ -72,7 +72,6 @@ public class MusicListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_music_list, container, false);
     }
 
@@ -81,7 +80,7 @@ public class MusicListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerViewTracks = view.findViewById(R.id.rec_view_tracks);
         textViewCountry = view.findViewById(R.id.country_music);
-        textViewCountry.append("\n" + country);
+        textViewCountry.append(country);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerViewTracks.setLayoutManager(layoutManager);
         cargarDatos();

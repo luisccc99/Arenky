@@ -22,14 +22,14 @@ public class SearchResponse {
     public final Boolean misspelling;
 
     @SerializedName("suggestions")
-    public final List<Suggestion> suggestionList;
+    public final List<SuggestionsFromSearch> suggestions;
 
-    public SearchResponse(String term, Integer more, Object auto, String trackingId, Boolean misspelling, List<Suggestion> suggestionList) {
+    public SearchResponse(String term, Integer more, Object auto, String trackingId, Boolean misspelling, List<SuggestionsFromSearch> suggestions) {
         this.term = term;
         this.more = more;
         this.auto = auto;
         this.trackingId = trackingId;
         this.misspelling = misspelling;
-        this.suggestionList = suggestionList;
+        this.suggestions = suggestions;
     }
 }

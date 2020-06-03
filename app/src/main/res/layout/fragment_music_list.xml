@@ -17,10 +17,15 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:textAlignment="center"
-            android:textSize="25sp"
-            android:text="Musica mas escuchada en"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
+            android:text="Música en "
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+<!--        <TextView-->
+<!--            android:id="@+id/text_info_music"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--            android:textAlignment="center"-->
+<!--            />-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_view_tracks"
             android:layout_width="match_parent"

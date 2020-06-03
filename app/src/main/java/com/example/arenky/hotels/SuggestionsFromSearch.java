@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-class Suggestion {
+public class SuggestionsFromSearch {
 
     @SerializedName("group")
     public final String group;
 
     @SerializedName("entities")
-    public final List<Entity> entitiesList;
+    public final List<EntityHotel> entitiesList;
 
-    Suggestion(String group, List<Entity> entitiesList) {
+    SuggestionsFromSearch(String group, List<EntityHotel> entitiesList) {
         this.group = group;
         this.entitiesList = entitiesList;
     }

@@ -10,10 +10,11 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 public class splash extends AppCompatActivity {
-    private final int DURACION_SPLASH = 100;
+    private final int DURACION_SPLASH = 700;
     ProgressBar progressBar;
     Handler handler = new Handler();
-    private int progressStatus =0;
+    private int progressStatus = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +24,7 @@ public class splash extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        progressBar =  findViewById(R.id.progressBar);
+//        progressBar = findViewById(R.id.progressBar);
 
         //Creamos  el lanzador que contendra un intento explicito que nos mandará a la ActivityMain
         new Handler().postDelayed(new Runnable() {
@@ -33,14 +34,14 @@ public class splash extends AppCompatActivity {
                 finish();
             }
         }, DURACION_SPLASH);//Aqui le asignamos el tiempo que  va a durar
-        while(progressStatus<100){
-            progressStatus+=1;
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.setProgress(progressStatus);
-                }
-            });
-        }
+//        while(progressStatus<100){
+//            progressStatus+=1;
+//            handler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    progressBar.setProgress(progressStatus);
+//                }
+//            });
+//        }
     }
 }

@@ -3,27 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FlightsListFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".fragments.HotelsQueryListSuggestions">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/text_info_flight"
+            android:id="@+id/txt_view_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            />
+            android:text="Resultados de " />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recViewFlights"
+            android:id="@+id/rec_view_suggestions"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:padding="3dp"/>
     </LinearLayout>
-
 </FrameLayout>
