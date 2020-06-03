@@ -36,9 +36,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MusicListFragment extends Fragment {
 
-    private static final String TOKEN = "236a0e52b7788f04f7de13a79c79d09a";
+    public static final String TOKEN = "236a0e52b7788f04f7de13a79c79d09a";
     private static final String TAG = MusicListFragment.class.getSimpleName();
-    private static final String MUSIC_BASE_URL = "http://ws.audioscrobbler.com";
+    public static final String MUSIC_BASE_URL = "http://ws.audioscrobbler.com";
 
 
     private Retrofit retrofitMusic = null;

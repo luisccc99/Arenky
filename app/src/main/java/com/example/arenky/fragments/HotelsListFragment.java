@@ -21,6 +21,7 @@ import com.example.arenky.hotels.BodySearchResults;
 import com.example.arenky.hotels.HotelDataBody;
 import com.example.arenky.hotels.HotelsResponse;
 import com.example.arenky.hotels.HotelsResponseData;
+import com.example.arenky.hotels.SearchHotelsResult;
 
 import java.util.List;
 
@@ -92,21 +93,25 @@ public class HotelsListFragment extends Fragment {
 
         final Call<HotelsResponse> hotelsResponseCall = hotelsAPI
                 .getHotels(destinationId);
-            hotelsResponseCall.enqueue(new Callback<HotelsResponse>() {
-                @Override
-                public void onResponse(Call<HotelsResponse> call, Response<HotelsResponse> response) {
-                    assert response.body() != null;
-                    HotelsResponseData data = response.body().data;
-                    HotelDataBody body = data.body;
-                    BodySearchResults results = body.searchResults;
+        hotelsResponseCall.enqueue(new Callback<HotelsResponse>() {
+            @Override
+            public void onResponse(Call<HotelsResponse> call, Response<HotelsResponse> response) {
+                assert response.body() != null;
+                HotelsResponseData data = response.body().data;
+                HotelDataBody body = data.body;
+                BodySearchResults results = body.searchResults;
+                List<SearchHotelsResult> hotels = results.hotelsResultsList;
 
-                    Log.d(TAG, "onResponse: "+results.totalCount);
+                for (int i = 0; i < hotels.size(); i++) {
+                    Log.d(TAG, "onResponse: " + hotels.get(i).hotelName + "\n" +
+                            hotels.get(i).starRating);
                 }
+            }
 
-                @Override
-                public void onFailure(Call<HotelsResponse> call, Throwable t) {
-                    Log.e(TAG, "onFailure: " + t.getMessage() ,t );
-                }
-            });
+            @Override
+            public void onFailure(Call<HotelsResponse> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage(), t);
+            }
+        });
     }
 }
