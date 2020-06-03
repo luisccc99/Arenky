@@ -82,7 +82,7 @@ public class FlightsListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         textViewInfoFlight = view.findViewById(R.id.text_info_flight);
         recyclerViewFlights = view.findViewById(R.id.recViewFlights);
-        textViewInfoFlight.setText("NonStop tickets a " + destination);
+        textViewInfoFlight.setText("Non-Stop tickets a " + destination);
         // cuando es un activity es this pero como estamos en un fragment es getContext
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerViewFlights.setLayoutManager(layoutManager);
@@ -134,7 +134,6 @@ public class FlightsListFragment extends Fragment {
         mFlightAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: " + "element clicked");
                 fragToMain.sendFlightData(
                         // cuando se envia la view, se envia el objeto
                         flightData.get(recyclerViewFlights.getChildAdapterPosition(v))

@@ -13,13 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.arenky.HotelToMain;
 import com.example.arenky.R;
 import com.example.arenky.SuggestionsAdapter;
 import com.example.arenky.endPoints.HotelsAPI;
-import com.example.arenky.hotels.EntityHotel;
+import com.example.arenky.hotels.EntitySuggestion;
 import com.example.arenky.hotels.SearchResponse;
 import com.example.arenky.hotels.SuggestionsFromSearch;
 
@@ -35,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HotelsQueryListSuggestions extends Fragment {
 
     private static final String TAG = HotelsQueryListSuggestions.class.getSimpleName();
-    private static final String HOTELS_BASE_URL = "https://hotels4.p.rapidapi.com";
+    public static final String HOTELS_BASE_URL = "https://hotels4.p.rapidapi.com";
 
     private Retrofit retrofitSuggestions = null;
     private SuggestionsAdapter suggestionsAdapter;
@@ -46,6 +46,8 @@ public class HotelsQueryListSuggestions extends Fragment {
     private String query = "";
 
     private List<SuggestionsFromSearch> suggestions;
+    private List<EntitySuggestion> entityHotels;
+    private HotelToMain hotelToMain;
 
     public HotelsQueryListSuggestions() {
         // Required empty public constructor
@@ -58,7 +60,9 @@ public class HotelsQueryListSuggestions extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
+        if (context instanceof HotelToMain) {
+            hotelToMain = (HotelToMain) context;
+        }
     }
 
     @Override
@@ -98,9 +102,10 @@ public class HotelsQueryListSuggestions extends Fragment {
                 suggestions = response.body().suggestions;
                 Log.d(TAG, "onResponse: " + suggestions.size());
                 SuggestionsFromSearch cityGroup = suggestions.get(0);
-                List<EntityHotel> entityHotels = cityGroup.entitiesList;
+                entityHotels = cityGroup.entitiesList;
                 suggestionsAdapter = new SuggestionsAdapter(getContext(), entityHotels);
                 recyclerViewSuggestions.setAdapter(suggestionsAdapter);
+                onElementClicked();
                 for (int i = 0; i < entityHotels.size(); i++) {
                     Log.d(TAG, "onResponse: \n" + i + " " + entityHotels.get(i));
                 }
@@ -110,6 +115,21 @@ public class HotelsQueryListSuggestions extends Fragment {
             public void onFailure(@NonNull Call<SearchResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, "onFailure: " + t.getMessage()
                         + "\n" + t.getLocalizedMessage(), t);
+            }
+        });
+    }
+
+    private void onElementClicked() {
+        suggestionsAdapter.setmOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hotelToMain.getDestinationEntity(
+                        Integer.valueOf(
+                                entityHotels
+                                        .get(recyclerViewSuggestions.getChildAdapterPosition(v))
+                                        .destinationId
+                        )
+                );
             }
         });
     }

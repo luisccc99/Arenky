@@ -22,6 +22,7 @@ import com.example.arenky.fragments.FlightsListFragment;
 import com.example.arenky.fragments.FlyFragment;
 import com.example.arenky.fragments.HomeFragment;
 import com.example.arenky.fragments.HotelsFragment;
+import com.example.arenky.fragments.HotelsListFragment;
 import com.example.arenky.fragments.HotelsQueryListSuggestions;
 import com.example.arenky.fragments.MapFragment;
 import com.example.arenky.fragments.MusicDetailFragment;
@@ -31,7 +32,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFragmentListener,
         FlightToMain, HomeFragment.MusicFragmentListener, MusicToMain,
-        QueryToMain {
+        QueryToMain, HotelToMain {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -175,5 +176,10 @@ public class MainActivity extends AppCompatActivity implements FlyFragment.FlyFr
         HotelsQueryListSuggestions responseList = new HotelsQueryListSuggestions();
         responseList.setQuery(city);
         showFragmentWithBackStack(responseList);
+    }
+
+    @Override
+    public void getDestinationEntity(Integer destinationEntity) {
+        showFragmentWithBackStack(HotelsListFragment.newInstance(destinationEntity));
     }
 }

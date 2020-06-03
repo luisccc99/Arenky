@@ -11,17 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.arenky.hotels.EntityHotel;
-import com.example.arenky.hotels.SuggestionsFromSearch;
+import com.example.arenky.hotels.EntitySuggestion;
 
 import java.util.List;
 
-public class SuggestionsAdapter extends RecyclerView.Adapter<SuggestionsAdapter.ViewHolder> {
+public class SuggestionsAdapter extends RecyclerView.Adapter<SuggestionsAdapter.ViewHolder>
+implements View.OnClickListener{
 
-    private List<EntityHotel> entityHotels;
+    private List<EntitySuggestion> entityHotels;
     private LayoutInflater mLayoutInflater;
+    private View.OnClickListener mOnClickListener;
 
-    public SuggestionsAdapter(Context context, List<EntityHotel> entityHotels) {
+    public SuggestionsAdapter(Context context, List<EntitySuggestion> entityHotels) {
         mLayoutInflater = LayoutInflater.from(context);
         this.entityHotels = entityHotels;
     }
@@ -31,6 +32,7 @@ public class SuggestionsAdapter extends RecyclerView.Adapter<SuggestionsAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mLayoutInflater.
                 inflate(R.layout.suggestion_item, parent, false);
+        view.setOnClickListener(this);
         return new ViewHolder(view);
     }
 
@@ -51,8 +53,19 @@ public class SuggestionsAdapter extends RecyclerView.Adapter<SuggestionsAdapter.
         return entityHotels.size();
     }
 
+    @Override
+    public void onClick(View v) {
+        if (mOnClickListener != null) {
+            mOnClickListener.onClick(v);
+        }
+    }
+
+    public void setmOnClickListener(View.OnClickListener onClickListener){
+        mOnClickListener = onClickListener;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
-        EntityHotel hotel;
+        EntitySuggestion hotel;
         final View mView;
         final TextView nameSuggestion;
         final TextView typeSuggestion;

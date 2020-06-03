@@ -10,9 +10,9 @@ public class SuggestionsFromSearch {
     public final String group;
 
     @SerializedName("entities")
-    public final List<EntityHotel> entitiesList;
+    public final List<EntitySuggestion> entitiesList;
 
-    SuggestionsFromSearch(String group, List<EntityHotel> entitiesList) {
+    SuggestionsFromSearch(String group, List<EntitySuggestion> entitiesList) {
         this.group = group;
         this.entitiesList = entitiesList;
     }

@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-public class EntityHotel {
+import java.io.Serializable;
+
+public class EntitySuggestion implements Serializable {
 
     @SerializedName("geoId")
     public final String geoId;
@@ -33,8 +35,8 @@ public class EntityHotel {
     @SerializedName("name")
     public final String nameEntity;
 
-    EntityHotel(String geoId, String destinationId, Integer landmarkCityDestinationId, String type,
-                String caption, String redirectPage, Double latitude, Double longitude, String name) {
+    EntitySuggestion(String geoId, String destinationId, Integer landmarkCityDestinationId, String type,
+                     String caption, String redirectPage, Double latitude, Double longitude, String name) {
         this.geoId = geoId;
         this.destinationId = destinationId;
         this.landmarkCityDestinationId = landmarkCityDestinationId;

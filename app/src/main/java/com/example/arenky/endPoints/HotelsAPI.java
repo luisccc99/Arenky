@@ -3,6 +3,8 @@ package com.example.arenky.endPoints;
 import com.example.arenky.hotels.HotelsResponse;
 import com.example.arenky.hotels.SearchResponse;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -22,9 +24,9 @@ public interface HotelsAPI {
             "x-rapidapi-host: hotels4.p.rapidapi.com",
             "x-rapidapi-key: ff019da863mshf678ee125e33941p171d1ejsn8d4b56a328e5"
     })
-    @GET("/properties/list?currency=MXN&locale=en_US&sortOrder=PRICE&destinationId=1506246&" +
+    @GET("/properties/list?currency=MXN&locale=es_MX&sortOrder=STAR_RATING_HIGHEST_FIRST&" +
             "pageNumber=1&checkIn=2020-01-08&checkOut=2020-01-10&pageSize=25&adults1=1")
-    Call<HotelsResponse> getHotels(@Query("destinationId") String destinationId);
+    Call<HotelsResponse> getHotels(@Query("destinationId") Integer destinationId);
 
 
 }
