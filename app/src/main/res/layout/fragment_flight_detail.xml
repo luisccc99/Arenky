@@ -12,26 +12,16 @@
         android:layout_marginHorizontal="10dp"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+        <TextView
+            android:id="@+id/gate_details"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardUseCompatPadding="true">
-
-            <TextView
-                android:id="@+id/gate_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="10dp"
-                android:contentDescription="Puedes buscar mas informacion en su sitio"
-                android:text="gate"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        </androidx.cardview.widget.CardView>
-
+            android:layout_marginBottom="10dp"
+            android:contentDescription="Puedes buscar mas informacion en su sitio"
+            android:text="gate"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
             android:id="@+id/found_at_detail"
@@ -133,8 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="9dp"
-            app:cardCornerRadius="3dp"
-            app:cardElevation="3dp">
+            >
 
             <TextView
                 android:id="@+id/actual_detail"

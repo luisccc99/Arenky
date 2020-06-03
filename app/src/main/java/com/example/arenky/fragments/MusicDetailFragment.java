@@ -18,6 +18,8 @@ import com.example.arenky.endPoints.LastFmAPI;
 import com.example.arenky.music.Artist;
 import com.example.arenky.music.ResponseMusic;
 import com.example.arenky.music.TrackData;
+import com.example.arenky.music.TrackResponse;
+import com.example.arenky.music.TrackResponseInfo;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +38,7 @@ public class MusicDetailFragment extends Fragment {
     private Bundle mBundle;
     private TrackData trackData;
     private Artist artist;
+    private String mbid;
     private Retrofit retrofit = null;
     private static final String TAG = MusicDetailFragment.class.getSimpleName();
 
@@ -46,31 +49,27 @@ public class MusicDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_music_detail, container, false);
         txtVwName = view.findViewById(R.id.track_name_detail);
         txtVwArtist = view.findViewById(R.id.artist_detail);
         txtVwListeners = view.findViewById(R.id.listeners_detail);
         txtVwDuration = view.findViewById(R.id.duration_detail);
         imgAlbum = view.findViewById(R.id.album_image_detail);
-        loadImageSample(view);
         mBundle = getArguments();
         trackData = null;
-        setUIContent();
-//        cargarImagen();
+        setUIContent(view);
         return view;
     }
 
-    private void loadImageSample(View v) {
-        String url = "https://lastfm.freetls.fastly.net/i/u/300x300/e6b38ee9858b906470ba6826825b9354.png";
-
+    private void loadImageSample(View v, String url) {
         Glide.with(v)
                 .load(url)
                 .centerCrop()
+                .placeholder(R.drawable.ic_music_note)
                 .into(imgAlbum);
     }
 
-    private void cargarImagen(View v) {
+    private void cargarImagen(final View v, String id) {
         if (retrofit == null) {
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(MusicListFragment.MUSIC_BASE_URL)
@@ -80,29 +79,35 @@ public class MusicDetailFragment extends Fragment {
 
         LastFmAPI lastFmAPI = retrofit.create(LastFmAPI.class);
 
-        final Call<ResponseMusic> responseMusicCall = lastFmAPI.getTrackInfo(artist.mBid,
-                MusicListFragment.TOKEN);
-        responseMusicCall.enqueue(new Callback<ResponseMusic>() {
-            @Override
-            public void onResponse(Call<ResponseMusic> call, Response<ResponseMusic> response) {
+        final Call<TrackResponse> responseCall = lastFmAPI
+                .getTrackInfo(id, MusicListFragment.TOKEN);
 
-                Log.d(TAG, "onResponse: " + response.body().tracks);
+        responseCall.enqueue(new Callback<TrackResponse>() {
+            @Override
+            public void onResponse(Call<TrackResponse> call, Response<TrackResponse> response) {
+                assert response.body() != null;
+                Log.d(TAG, "onResponse: " + response.body().track.mbid);
+                loadImageSample(v, response.body().track.album.albumImage.get(3).textUrl);
             }
 
             @Override
-            public void onFailure(Call<ResponseMusic> call, Throwable t) {
-
+            public void onFailure(Call<TrackResponse> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage(), t);
             }
         });
+
 
     }
 
     @SuppressLint("SetTextI18n")
-    private void setUIContent() {
+    private void setUIContent(View view) {
         if (mBundle != null) {
             trackData = (TrackData) mBundle.getSerializable("trackData");
             assert trackData != null;
             artist = trackData.artist;
+            mbid = trackData.mBid;
+            cargarImagen(view, mbid);
+
             txtVwName.setText(trackData.name);
             txtVwArtist.setText(artist.name);
             txtVwListeners.setText("Oyentes " +

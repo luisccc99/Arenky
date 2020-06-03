@@ -121,7 +121,8 @@ public class MusicListFragment extends Fragment {
         musicAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: " + "click");
+                Log.d(TAG, "onClick: " + "send mbid" + trackData
+                        .get(recyclerViewTracks.getChildAdapterPosition(v)).mBid);
                 toMain.sendTrackData(
                         trackData.get(recyclerViewTracks.getChildAdapterPosition(v))
                 );
