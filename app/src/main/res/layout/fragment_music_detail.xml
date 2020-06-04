@@ -33,7 +33,7 @@
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_launcher_background" />
+                android:src="@drawable/cargar" />
 
             <TextView
                 android:id="@+id/artist_detail"

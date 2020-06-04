@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.arenky.HotelAdapter;
 import com.example.arenky.R;
 import com.example.arenky.endPoints.HotelsAPI;
 import com.example.arenky.hotels.BodySearchResults;
@@ -38,6 +39,7 @@ public class HotelsListFragment extends Fragment {
     private Integer destinationId;
 
     private Retrofit retrofitHotels = null;
+    private HotelAdapter hotelAdapter;
 
     private TextView textViewInfo;
     private RecyclerView recyclerViewHotels;
@@ -102,9 +104,12 @@ public class HotelsListFragment extends Fragment {
                 BodySearchResults results = body.searchResults;
                 List<SearchHotelsResult> hotels = results.hotelsResultsList;
 
+                hotelAdapter = new HotelAdapter(getContext(), hotels);
+                recyclerViewHotels.setAdapter(hotelAdapter);
+
                 for (int i = 0; i < hotels.size(); i++) {
-                    Log.d(TAG, "onResponse: " + hotels.get(i).hotelName + "\n" +
-                            hotels.get(i).starRating);
+                    Log.d(TAG, "onResponse: " + hotels.get(i).hotelName + "starRating" +
+                            hotels.get(i).starRating+"\n");
                 }
             }
 

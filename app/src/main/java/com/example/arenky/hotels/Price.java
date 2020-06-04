@@ -10,8 +10,12 @@ public class Price {
     @SerializedName("exactCurrent")
     public final Double exactCurrent;
 
-    public Price(String current, Double exactCurrent) {
+    @SerializedName("old")
+    public final String old;
+
+    public Price(String current, Double exactCurrent, String old) {
         this.current = current;
         this.exactCurrent = exactCurrent;
+        this.old = old;
     }
 }

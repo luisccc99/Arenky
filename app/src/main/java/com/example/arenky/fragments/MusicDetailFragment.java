@@ -65,7 +65,7 @@ public class MusicDetailFragment extends Fragment {
         Glide.with(v)
                 .load(url)
                 .centerCrop()
-                .placeholder(R.drawable.ic_music_note)
+                .placeholder(R.drawable.cargar)
                 .into(imgAlbum);
     }
 
