@@ -35,7 +35,6 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mLayoutInflater
                 .inflate(R.layout.hotel_item, parent, false);
-        // set on click listener here
         return new ViewHolder(view);
     }
 
@@ -60,7 +59,6 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
         final View mView;
         final ImageView imgHotel;
         final TextView textViewHotelName;
-        final TextView textViewPrice;
         final TextView textViewHotelRating;
 
         public ViewHolder(@NonNull View itemView) {
@@ -68,7 +66,6 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
             mView = itemView;
             imgHotel = mView.findViewById(R.id.img_hotel);
             textViewHotelName = mView.findViewById(R.id.hotel_name);
-            textViewPrice = mView.findViewById(R.id.hotel_price);
             textViewHotelRating = mView.findViewById(R.id.hotel_rating);
         }
     }

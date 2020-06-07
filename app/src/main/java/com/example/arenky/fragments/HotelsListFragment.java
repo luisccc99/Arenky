@@ -37,11 +37,10 @@ public class HotelsListFragment extends Fragment {
     private static final String DESTINATION_ID = "destinationId";
     private static final String TAG = HotelsListFragment.class.getSimpleName();
     private Integer destinationId;
-
+    private HotelsResponseData data;
     private Retrofit retrofitHotels = null;
     private HotelAdapter hotelAdapter;
 
-    private TextView textViewInfo;
     private RecyclerView recyclerViewHotels;
 
     public HotelsListFragment() {
@@ -75,8 +74,6 @@ public class HotelsListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        textViewInfo = view.findViewById(R.id.txt_info_hotels);
-        textViewInfo.setText("destino: " + destinationId);
         recyclerViewHotels = view.findViewById(R.id.rec_view_hotels);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerViewHotels.setLayoutManager(layoutManager);
@@ -97,7 +94,8 @@ public class HotelsListFragment extends Fragment {
                 .getHotels(destinationId);
         hotelsResponseCall.enqueue(new Callback<HotelsResponse>() {
             @Override
-            public void onResponse(Call<HotelsResponse> call, Response<HotelsResponse> response) {
+            public void onResponse(@NonNull Call<HotelsResponse> call,
+                                   @NonNull Response<HotelsResponse> response) {
                 assert response.body() != null;
                 HotelsResponseData data = response.body().data;
                 HotelDataBody body = data.body;
@@ -114,7 +112,7 @@ public class HotelsListFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<HotelsResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<HotelsResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, "onFailure: " + t.getMessage(), t);
             }
         });
